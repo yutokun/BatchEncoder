@@ -1,0 +1,73 @@
+﻿<Window x:Class="BatchEncoder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchEncoder"
+        mc:Ignorable="d"
+        Title="BatchEncoder" Height="240" Width="620"
+        AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
+        ResizeMode="CanMinimize">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <GroupBox Header="Video" Width="200">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Codec</Label>
+                        <ComboBox Name="VideoCodec" SelectedIndex="0">
+                            <ComboBoxItem>copy</ComboBoxItem>
+                            <ComboBoxItem>hevc_nvenc</ComboBoxItem>
+                            <ComboBoxItem>hevc</ComboBoxItem>
+                            <ComboBoxItem>libx264</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Bitrate</Label>
+                        <TextBox Name="VideoBitrate" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Framerate</Label>
+                        <TextBox Name="Framerate" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Size</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="Width" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                            <Label>×</Label>
+                            <TextBox Name="Height" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Audio" Width="200">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Codec</Label>
+                        <ComboBox Name="AudioCodec" SelectedIndex="0">
+                            <ComboBoxItem>copy</ComboBoxItem>
+                            <ComboBoxItem>aac</ComboBoxItem>
+                            <ComboBoxItem>alac</ComboBoxItem>
+                            <ComboBoxItem>opus</ComboBoxItem>
+                            <ComboBoxItem>pcm_s16le</ComboBoxItem>
+                            <ComboBoxItem>pcm_s24le</ComboBoxItem>
+                            <ComboBoxItem>vorbis</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="General" Width="200">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Start Sec.</Label>
+                        <TextBox Name="StartSec" PreviewTextInput="CheckTextContainsNumber" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <Label Width="70">Duration</Label>
+                        <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber" />
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <Label HorizontalAlignment="Center" Margin="20">Drop Files Here</Label>
+    </StackPanel>
+</Window>
