@@ -46,18 +46,6 @@ namespace BatchEncoder
 			Run(settings);
 		}
 
-		class EncodeSettings
-		{
-			public string path;
-			public string videoCodec;
-			public string videoBitrate;
-			public string framerate;
-			public string videoSize;
-			public string audioCodec;
-			public string startSec;
-			public string duration;
-		}
-
 		void CheckTextContainsNumber(object sender, TextCompositionEventArgs e)
 		{
 			var regex = new Regex("[^0-9.-]+");
@@ -68,17 +56,19 @@ namespace BatchEncoder
 		{
 			var encoder = new Process {StartInfo = {FileName = "ffmpeg"}};
 
-			var input = $"-i \"{settings.path}\"";
-			var vcodec = $"-vcodec {settings.videoCodec}";
-			var vBitrate = string.IsNullOrEmpty(settings.videoBitrate) ? "" : $"-b:v {settings.videoBitrate}";
-			var framerate = string.IsNullOrEmpty(settings.framerate) ? "" : $"-r {settings.framerate}";
-			var vSize = string.IsNullOrEmpty(settings.videoSize) ? "" : $"-s {settings.videoSize}";
-			var acodec = $"-acodec {settings.audioCodec}";
-			var startSec = string.IsNullOrEmpty(settings.startSec) ? "" : $"-ss {settings.startSec}";
-			var duration = string.IsNullOrEmpty(settings.duration) ? "" : $"-t {settings.duration}";
-			var output = $"\"{settings.path.Replace(".mp4", "Encoded.mp4")}\"";
+			var arguments = new ArgumentComposer();
 
-			encoder.StartInfo.Arguments = $"{input} {vcodec} {vBitrate} {framerate} {vSize} {acodec} {startSec} {duration} {output}";
+			arguments.Add($"-i \"{settings.path}\"");
+			arguments.Add($"-vcodec {settings.videoCodec}");
+			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
+			arguments.Add($"-r {settings.framerate}", settings.framerate);
+			arguments.Add($"-s {settings.videoSize}", settings.videoSize);
+			arguments.Add($"-acodec {settings.audioCodec}");
+			arguments.Add($"-ss {settings.startSec}", settings.startSec);
+			arguments.Add($"-t {settings.duration}", settings.duration);
+			arguments.Add($"\"{settings.path.Replace(".mp4", "Encoded.mp4")}\"");
+
+			encoder.StartInfo.Arguments = arguments.ToString();
 			encoder.Start();
 		}
 	}
