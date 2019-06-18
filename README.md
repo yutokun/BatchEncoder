@@ -11,7 +11,11 @@ This app is wrapper GUI for the [ffmpeg](https://ffmpeg.org/).
 1. Set options.
 2. Drop file(s).
 
-## Prerequisites
+## Option
+
+Let field empty to use automatic setting.
+
+## Prerequisite
 
 You need to have ffmpeg added to your PATH.
 
