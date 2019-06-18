@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -12,8 +10,6 @@ namespace BatchEncoder
 	/// </summary>
 	public partial class MainWindow
 	{
-		Queue<EncodeSettings> queue = new Queue<EncodeSettings>();
-
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -34,6 +30,7 @@ namespace BatchEncoder
 		void MainWindow_OnDrop(object sender, DragEventArgs e)
 		{
 			var files = (string[]) e.Data.GetData(DataFormats.FileDrop, false);
+			var queue = new Queue<EncodeSettings>();
 			foreach (var file in files)
 			{
 				var settings = new EncodeSettings
@@ -50,43 +47,13 @@ namespace BatchEncoder
 				queue.Enqueue(settings);
 			}
 
-			ProcessNextQueue(default, default);
+			MovieEncoder.AddQueue(queue);
 		}
 
 		void CheckTextContainsNumber(object sender, TextCompositionEventArgs e)
 		{
 			var regex = new Regex("[^0-9.-]+");
 			e.Handled = regex.IsMatch(StartSec.Text + e.Text);
-		}
-
-		void ProcessNextQueue(object sender, EventArgs eventArgs)
-		{
-			if (queue.Count == 0) return;
-
-			var encoder = Run(queue.Dequeue());
-			encoder.EnableRaisingEvents = true;
-			encoder.Exited += ProcessNextQueue;
-		}
-
-		Process Run(EncodeSettings settings)
-		{
-			var encoder = new Process {StartInfo = {FileName = "ffmpeg"}};
-
-			var arguments = new ArgumentComposer();
-
-			arguments.Add($"-i \"{settings.path}\"");
-			arguments.Add($"-vcodec {settings.videoCodec}");
-			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
-			arguments.Add($"-r {settings.framerate}", settings.framerate);
-			arguments.Add($"-s {settings.videoSize}", settings.videoSize);
-			arguments.Add($"-acodec {settings.audioCodec}");
-			arguments.Add($"-ss {settings.startSec}", settings.startSec);
-			arguments.Add($"-t {settings.duration}", settings.duration);
-			arguments.Add($"\"{settings.path.Replace(".mp4", "Encoded.mp4")}\"");
-
-			encoder.StartInfo.Arguments = arguments.ToString();
-			encoder.Start();
-			return encoder;
 		}
 	}
 }

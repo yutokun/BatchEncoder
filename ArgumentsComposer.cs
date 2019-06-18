@@ -3,21 +3,9 @@ using System.Text;
 
 namespace BatchEncoder
 {
-	class EncodeSettings
+	public class ArgumentsComposer
 	{
-		public string path;
-		public string videoCodec;
-		public string videoBitrate;
-		public string framerate;
-		public string videoSize;
-		public string audioCodec;
-		public string startSec;
-		public string duration;
-	}
-
-	public class ArgumentComposer
-	{
-		List<string> arguments = new List<string>();
+		readonly List<string> arguments = new List<string>();
 
 		public void Add(string argument)
 		{
