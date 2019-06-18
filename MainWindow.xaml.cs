@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -11,6 +12,8 @@ namespace BatchEncoder
 	/// </summary>
 	public partial class MainWindow
 	{
+		Queue<EncodeSettings> queue = new Queue<EncodeSettings>();
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -31,19 +34,23 @@ namespace BatchEncoder
 		void MainWindow_OnDrop(object sender, DragEventArgs e)
 		{
 			var files = (string[]) e.Data.GetData(DataFormats.FileDrop, false);
-			Console.WriteLine(files[0]);
-			var settings = new EncodeSettings
+			foreach (var file in files)
 			{
-				path = files[0],
-				videoCodec = VideoCodec.Text,
-				videoBitrate = VideoBitrate.Text,
-				framerate = Framerate.Text,
-				videoSize = (string.IsNullOrEmpty(Width.Text) || string.IsNullOrEmpty(Height.Text)) ? "" : $"{Width.Text}x{Height.Text}",
-				audioCodec = AudioCodec.Text,
-				startSec = StartSec.Text,
-				duration = Duration.Text
-			};
-			Run(settings);
+				var settings = new EncodeSettings
+				{
+					path = file,
+					videoCodec = VideoCodec.Text,
+					videoBitrate = VideoBitrate.Text,
+					framerate = Framerate.Text,
+					videoSize = (string.IsNullOrEmpty(Width.Text) || string.IsNullOrEmpty(Height.Text)) ? "" : $"{Width.Text}x{Height.Text}",
+					audioCodec = AudioCodec.Text,
+					startSec = StartSec.Text,
+					duration = Duration.Text
+				};
+				queue.Enqueue(settings);
+			}
+
+			ProcessNextQueue(default, default);
 		}
 
 		void CheckTextContainsNumber(object sender, TextCompositionEventArgs e)
@@ -52,7 +59,16 @@ namespace BatchEncoder
 			e.Handled = regex.IsMatch(StartSec.Text + e.Text);
 		}
 
-		void Run(EncodeSettings settings)
+		void ProcessNextQueue(object sender, EventArgs eventArgs)
+		{
+			if (queue.Count == 0) return;
+
+			var encoder = Run(queue.Dequeue());
+			encoder.EnableRaisingEvents = true;
+			encoder.Exited += ProcessNextQueue;
+		}
+
+		Process Run(EncodeSettings settings)
 		{
 			var encoder = new Process {StartInfo = {FileName = "ffmpeg"}};
 
@@ -70,6 +86,7 @@ namespace BatchEncoder
 
 			encoder.StartInfo.Arguments = arguments.ToString();
 			encoder.Start();
+			return encoder;
 		}
 	}
 }
