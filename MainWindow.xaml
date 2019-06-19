@@ -5,15 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchEncoder"
         mc:Ignorable="d"
-        Title="Batch Encoder" Height="240" Width="620"
+        Title="Batch Encoder" Height="280" Width="640"
         AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
         ResizeMode="CanMinimize">
+    <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Width" Value="200" />
+        </Style>
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0 0 0 10" />
+            <Setter Property="LastChildFill" Value="True" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="70" />
+        </Style>
+    </Window.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <GroupBox Header="Video" Width="200">
+            <GroupBox Header="Video">
                 <StackPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Codec</Label>
+                    <DockPanel>
+                        <Label>Codec</Label>
                         <ComboBox Name="VideoCodec" SelectedIndex="0">
                             <ComboBoxItem>copy</ComboBoxItem>
                             <ComboBoxItem>hevc_nvenc</ComboBoxItem>
@@ -21,28 +33,28 @@
                             <ComboBoxItem>libx264</ComboBoxItem>
                         </ComboBox>
                     </DockPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Bitrate</Label>
+                    <DockPanel>
+                        <Label>Bitrate</Label>
                         <TextBox Name="VideoBitrate" />
                     </DockPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Framerate</Label>
+                    <DockPanel>
+                        <Label>Framerate</Label>
                         <TextBox Name="Framerate" />
                     </DockPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Size</Label>
+                    <DockPanel>
+                        <Label>Size</Label>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="50" />
-                            <Label>×</Label>
+                            <Label Width="Auto">×</Label>
                             <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="50" />
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Audio" Width="200">
+            <GroupBox Header="Audio">
                 <StackPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Codec</Label>
+                    <DockPanel>
+                        <Label>Codec</Label>
                         <ComboBox Name="AudioCodec" SelectedIndex="0">
                             <ComboBoxItem>copy</ComboBoxItem>
                             <ComboBoxItem>aac</ComboBoxItem>
@@ -55,19 +67,19 @@
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="General" Width="200">
+            <GroupBox Header="General">
                 <StackPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Start Sec.</Label>
+                    <DockPanel>
+                        <Label>Start Sec.</Label>
                         <TextBox Name="StartSec" PreviewTextInput="CheckTextContainsNumber" />
                     </DockPanel>
-                    <DockPanel LastChildFill="True">
-                        <Label Width="70">Duration</Label>
+                    <DockPanel>
+                        <Label>Duration</Label>
                         <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
-        <Label HorizontalAlignment="Center" Margin="20">Drop Files Here</Label>
+        <Label Width="Auto" HorizontalAlignment="Center" Margin="20">Drop Files Here</Label>
     </StackPanel>
 </Window>
