@@ -39,7 +39,7 @@ namespace BatchEncoder
 					videoCodec = VideoCodec.Text,
 					videoBitrate = VideoBitrate.Text,
 					framerate = Framerate.Text,
-					videoSize = (string.IsNullOrEmpty(Width.Text) || string.IsNullOrEmpty(Height.Text)) ? "" : $"{Width.Text}x{Height.Text}",
+					videoSize = (string.IsNullOrEmpty(VideoWidth.Text) || string.IsNullOrEmpty(VideoHeight.Text)) ? "" : $"{VideoWidth.Text}x{VideoHeight.Text}",
 					audioCodec = AudioCodec.Text,
 					startSec = StartSec.Text,
 					duration = Duration.Text

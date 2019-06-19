@@ -32,9 +32,9 @@
                     <DockPanel LastChildFill="True">
                         <Label Width="70">Size</Label>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Name="Width" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                            <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="50" />
                             <Label>×</Label>
-                            <TextBox Name="Height" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                            <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="50" />
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
