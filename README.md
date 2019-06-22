@@ -27,3 +27,15 @@ You need to have ffmpeg added to your PATH.
 - Queue List (currently queue is not shown)
 - More friendly UI
 - More options.
+
+## License
+
+### Batch Encoder
+
+[MIT License](LICENSE)
+
+### ffmpeg
+
+Currently not included in this repository, but you **MUST** check when you use patented codec.
+
+[FFmpeg License and Legal Considerations](http://ffmpeg.org/legal.html)
