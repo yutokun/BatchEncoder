@@ -17,10 +17,13 @@
             <Setter Property="LastChildFill" Value="True" />
         </Style>
         <Style TargetType="Label">
-            <Setter Property="Width" Value="70" />
+            <Setter Property="Width" Value="80" />
+        </Style>
         <Style TargetType="TextBox">
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
     <StackPanel>
@@ -47,9 +50,9 @@
                     <DockPanel>
                         <Label>Size</Label>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                            <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="45" />
                             <Label Width="Auto">×</Label>
-                            <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="50" />
+                            <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45" />
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
@@ -70,7 +73,7 @@
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="General">
+            <GroupBox Header="Trim">
                 <StackPanel>
                     <DockPanel>
                         <Label>Start Sec.</Label>
@@ -79,6 +82,10 @@
                     <DockPanel>
                         <Label>Duration</Label>
                         <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber" />
+                    </DockPanel>
+                    <DockPanel>
+                        <Label>Concatenate</Label>
+                        <CheckBox Name="Concatenate" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>

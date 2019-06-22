@@ -44,12 +44,13 @@ namespace BatchEncoder
 					videoSize = (string.IsNullOrEmpty(VideoWidth.Text) || string.IsNullOrEmpty(VideoHeight.Text)) ? "" : $"{VideoWidth.Text}x{VideoHeight.Text}",
 					audioCodec = AudioCodec.Text,
 					startSec = StartSec.Text,
-					duration = Duration.Text
+					duration = Duration.Text,
+					concatenate = Concatenate.IsChecked == true
 				};
 				queue.Enqueue(settings);
 			}
 
-			MovieEncoder.AddQueue(queue);
+			MovieEncoder.AddQueue(queue, Concatenate.IsChecked == true);
 		}
 
 		void CheckTextContainsNumber(object sender, TextCompositionEventArgs e)

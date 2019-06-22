@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace BatchEncoder
 {
@@ -15,23 +16,52 @@ namespace BatchEncoder
 		public string audioCodec;
 		public string startSec;
 		public string duration;
+		public bool concatenate;
 	}
 
 	public static class MovieEncoder
 	{
 		static readonly Queue<EncodeSettings> Queue = new Queue<EncodeSettings>();
+		static bool running;
 
-		public static void AddQueue(Queue<EncodeSettings> newQueue)
+		public static void AddQueue(Queue<EncodeSettings> newQueue, bool concatenate)
 		{
-			foreach (var item in newQueue) Queue.Enqueue(item);
+			if (concatenate)
+			{
+				var queue = CreateConcatQueue(newQueue);
+				Queue.Enqueue(queue);
+			}
+			else
+			{
+				foreach (var item in newQueue) Queue.Enqueue(item);
+			}
+
 			ProcessNextQueue(default, default);
+		}
+
+		static EncodeSettings CreateConcatQueue(Queue<EncodeSettings> newQueue)
+		{
+			var concat = new StringBuilder();
+			foreach (var q in newQueue) concat.AppendLine("file '" + q.path + "'");
+
+			var fileList = Path.Combine(Directory.GetCurrentDirectory(), "concat.txt");
+			File.WriteAllText(fileList, concat.ToString());
+
+			var queue = newQueue.Dequeue();
+			queue.path = fileList;
+			return queue;
 		}
 
 		static void ProcessNextQueue(object sender, EventArgs eventArgs)
 		{
-			if (Queue.Count == 0) return;
+			if (Queue.Count == 0)
+			{
+				running = false;
+				return;
+			}
 
 			var encoder = Run(Queue.Dequeue());
+			running = true;
 			encoder.EnableRaisingEvents = true;
 			encoder.Exited += ProcessNextQueue;
 		}
@@ -42,6 +72,7 @@ namespace BatchEncoder
 
 			var arguments = new ArgumentsComposer();
 
+			arguments.Add($"-f concat -safe 0", settings.concatenate);
 			arguments.Add($"-i \"{settings.path}\"");
 			arguments.Add($"-vcodec {settings.videoCodec}");
 			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);

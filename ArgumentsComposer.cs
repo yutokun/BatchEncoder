@@ -18,6 +18,11 @@ namespace BatchEncoder
 			arguments.Add(argument);
 		}
 
+		public void Add(string argument, bool condition)
+		{
+			if (condition) arguments.Add(argument);
+		}
+
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
