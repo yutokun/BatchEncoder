@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -13,6 +15,8 @@ namespace BatchEncoder
 		public MainWindow()
 		{
 			InitializeComponent();
+			var ver = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+			Window.Title += $" - {ver.ProductVersion}";
 			Application.Current.Exit += OnExit;
 		}
 
