@@ -82,7 +82,7 @@ namespace BatchEncoder
 			arguments.Add($"-acodec {settings.audioCodec}");
 			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-t {settings.duration}", settings.duration);
-			var extension = ExtensionChecker.IsSameExtension(settings.output) ? "Encoded.mp4" : "mp4";
+			var extension = ExtensionChecker.GetAttributedExtension(settings);
 			arguments.Add($"\"{Path.ChangeExtension(settings.output, extension)}\"");
 
 			encoder.StartInfo.Arguments = arguments.ToString();
