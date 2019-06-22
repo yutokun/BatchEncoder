@@ -33,7 +33,7 @@
                 <StackPanel>
                     <DockPanel>
                         <Label>Codec</Label>
-                        <ComboBox Name="VideoCodec" SelectedIndex="0">
+                        <ComboBox Name="VideoCodec" SelectedIndex="1">
                             <ComboBoxItem>copy</ComboBoxItem>
                             <ComboBoxItem>hevc_nvenc</ComboBoxItem>
                             <ComboBoxItem>hevc</ComboBoxItem>
@@ -58,7 +58,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Label>Simul.</Label>
-                        <CheckBox Name="Simultaneously" />
+                        <CheckBox Name="Simultaneously" IsChecked="True" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
