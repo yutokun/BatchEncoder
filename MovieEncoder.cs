@@ -37,7 +37,7 @@ namespace BatchEncoder
 				foreach (var item in newQueue) Queue.Enqueue(item);
 			}
 
-			ProcessNextQueue(default, default);
+			if (!running) ProcessNextQueue(default, default);
 		}
 
 		static EncodeSettings CreateConcatQueue(Queue<EncodeSettings> newQueue)
