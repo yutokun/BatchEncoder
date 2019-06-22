@@ -12,5 +12,11 @@ namespace BatchEncoder
 			var extension = Path.GetExtension(path);
 			return !SupportedExtensions.Contains(extension);
 		}
+
+		public static bool IsSameExtension(string path)
+		{
+			var extension = Path.GetExtension(path);
+			return extension == ".mp4";
+		}
 	}
 }

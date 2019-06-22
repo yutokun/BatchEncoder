@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace BatchEncoder
 {
@@ -49,7 +50,8 @@ namespace BatchEncoder
 			arguments.Add($"-acodec {settings.audioCodec}");
 			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-t {settings.duration}", settings.duration);
-			arguments.Add($"\"{settings.path.Replace(".mp4", "Encoded.mp4")}\"");
+			var extension = ExtensionChecker.IsSameExtension(settings.path) ? "Encoded.mp4" : "mp4";
+			arguments.Add($"\"{Path.ChangeExtension(settings.path, extension)}\"");
 
 			encoder.StartInfo.Arguments = arguments.ToString();
 			encoder.Start();
