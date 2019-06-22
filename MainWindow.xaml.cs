@@ -33,6 +33,8 @@ namespace BatchEncoder
 			var queue = new Queue<EncodeSettings>();
 			foreach (var file in files)
 			{
+				if (ExtensionChecker.IsUnsupportedExtension(file)) continue;
+
 				var settings = new EncodeSettings
 				{
 					path = file,
