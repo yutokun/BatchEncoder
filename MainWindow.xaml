@@ -18,6 +18,9 @@
         </Style>
         <Style TargetType="Label">
             <Setter Property="Width" Value="70" />
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
         </Style>
     </Window.Resources>
     <StackPanel>
