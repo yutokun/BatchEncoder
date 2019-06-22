@@ -13,6 +13,7 @@ namespace BatchEncoder
 		public string videoBitrate;
 		public string framerate;
 		public string videoSize;
+		public bool simultaneously;
 		public string audioCodec;
 		public string startSec;
 		public string duration;
@@ -23,7 +24,28 @@ namespace BatchEncoder
 	public static class MovieEncoder
 	{
 		static readonly Queue<EncodeSettings> Queue = new Queue<EncodeSettings>();
-		static bool Running;
+		static int EncoderCount;
+
+		static int EmptySlot
+		{
+			get
+			{
+				if (Queue.Count == 0) return 0;
+
+				var simultaneously = Queue.Peek().simultaneously;
+				var maxSlot = simultaneously ? 2 : 1;
+				return maxSlot - EncoderCount;
+			}
+		}
+
+		static bool Runnable
+		{
+			get
+			{
+				if (Queue.Count == 0) return false;
+				return EmptySlot > 0;
+			}
+		}
 
 		public static void AddQueue(Queue<EncodeSettings> newQueue, bool concatenate)
 		{
@@ -37,7 +59,7 @@ namespace BatchEncoder
 				foreach (var item in newQueue) Queue.Enqueue(item);
 			}
 
-			if (!Running) ProcessNextQueue(default, default);
+			ProcessNextQueue(default, default);
 		}
 
 		static EncodeSettings CreateConcatQueue(Queue<EncodeSettings> newQueue)
@@ -55,16 +77,18 @@ namespace BatchEncoder
 
 		static void ProcessNextQueue(object sender, EventArgs eventArgs)
 		{
-			if (Queue.Count == 0)
-			{
-				Running = false;
-				return;
-			}
+			if (!Runnable) return;
 
-			var encoder = Run(Queue.Dequeue());
-			Running = true;
-			encoder.EnableRaisingEvents = true;
-			encoder.Exited += ProcessNextQueue;
+			var emptySlot = EmptySlot;
+			for (var i = 0; i < emptySlot; i++)
+			{
+				if (Queue.Count == 0) break;
+
+				var encoder = Run(Queue.Dequeue());
+				++EncoderCount;
+				encoder.EnableRaisingEvents = true;
+				encoder.Exited += EncoderOnExited;
+			}
 		}
 
 		static Process Run(EncodeSettings settings)
@@ -89,6 +113,13 @@ namespace BatchEncoder
 			encoder.Start();
 			return encoder;
 		}
+
+		static void EncoderOnExited(object sender, EventArgs e)
+		{
+			--EncoderCount;
+			ProcessNextQueue(sender, e);
+		}
+
 
 		public static void RemoveConcatFile()
 		{

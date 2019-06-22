@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BatchEncoder"
         mc:Ignorable="d"
         Name="Window"
-        Title="Batch Encoder" Height="280" Width="640"
+        Title="Batch Encoder" Height="320" Width="640"
         AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -55,6 +55,10 @@
                             <Label Width="Auto">×</Label>
                             <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45" />
                         </StackPanel>
+                    </DockPanel>
+                    <DockPanel>
+                        <Label>Simul.</Label>
+                        <CheckBox Name="Simultaneously" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
