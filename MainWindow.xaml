@@ -31,7 +31,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
             <GroupBox Header="Video">
                 <StackPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="コーデックを選択します。hevc_nvenc を使用するには、対応する GPU が必要です。">
                         <Label>Codec</Label>
                         <ComboBox Name="VideoCodec" SelectedIndex="1">
                             <ComboBoxItem>copy</ComboBoxItem>
@@ -40,15 +40,15 @@
                             <ComboBoxItem>libx264</ComboBoxItem>
                         </ComboBox>
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="40M 350k といった形でビットレートを指定します。空欄の場合、たぶん 2000k になります。">
                         <Label>Bitrate</Label>
                         <TextBox Name="VideoBitrate" />
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="フレームレートを指定します。空欄の場合、元ファイルのレートが使用されます。">
                         <Label>Framerate</Label>
                         <TextBox Name="Framerate" />
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="縦横のピクセル数を指定します。空欄の場合、元のサイズが使用されます。">
                         <Label>Size</Label>
                         <StackPanel Orientation="Horizontal">
                             <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="45" />
@@ -56,7 +56,8 @@
                             <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45" />
                         </StackPanel>
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel
+                        ToolTip="同時に2つまでのエンコーディングを実行します。hevc_nvenc で複数ファイルを処理する際に大きな効果があります。CPU を使うコーデックでは少し遅くなります。">
                         <Label>Simul.</Label>
                         <CheckBox Name="Simultaneously" IsChecked="True" />
                     </DockPanel>
@@ -64,7 +65,7 @@
             </GroupBox>
             <GroupBox Header="Audio">
                 <StackPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="コーデックを選択します。">
                         <Label>Codec</Label>
                         <ComboBox Name="AudioCodec" SelectedIndex="0">
                             <ComboBoxItem>copy</ComboBoxItem>
@@ -80,15 +81,15 @@
             </GroupBox>
             <GroupBox Header="Trim">
                 <StackPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="開始時間を秒で指定します。先頭の不要部分をカットできます。空欄ならカットしません。">
                         <Label>Start Sec.</Label>
                         <TextBox Name="StartSec" PreviewTextInput="CheckTextContainsNumber" />
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="動画の長さを指定します。最後の不要部分をカットできます。空欄ならカットしません。">
                         <Label>Duration</Label>
                         <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber" />
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel ToolTip="複数のファイルを連結します。コーデックをすべて copy にしておくと、劣化なしに連結できます。（動画のフォーマットが一致している必要があります。）">
                         <Label>Concatenate</Label>
                         <CheckBox Name="Concatenate" />
                     </DockPanel>
