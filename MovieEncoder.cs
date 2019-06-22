@@ -89,5 +89,11 @@ namespace BatchEncoder
 			encoder.Start();
 			return encoder;
 		}
+
+		public static void RemoveConcatFile()
+		{
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "concat.txt");
+			File.Delete(path);
+		}
 	}
 }

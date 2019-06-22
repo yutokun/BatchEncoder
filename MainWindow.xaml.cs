@@ -13,6 +13,7 @@ namespace BatchEncoder
 		public MainWindow()
 		{
 			InitializeComponent();
+			Application.Current.Exit += OnExit;
 		}
 
 		void MainWindow_OnDragEnter(object sender, DragEventArgs e)
@@ -58,6 +59,12 @@ namespace BatchEncoder
 		{
 			var regex = new Regex("[^0-9.-]+");
 			e.Handled = regex.IsMatch(StartSec.Text + e.Text);
+		}
+
+		void OnExit(object sender, ExitEventArgs e)
+		{
+			MovieEncoder.RemoveConcatFile();
+			Application.Current.Exit -= OnExit;
 		}
 	}
 }
