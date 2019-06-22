@@ -23,7 +23,7 @@ namespace BatchEncoder
 	public static class MovieEncoder
 	{
 		static readonly Queue<EncodeSettings> Queue = new Queue<EncodeSettings>();
-		static bool running;
+		static bool Running;
 
 		public static void AddQueue(Queue<EncodeSettings> newQueue, bool concatenate)
 		{
@@ -37,7 +37,7 @@ namespace BatchEncoder
 				foreach (var item in newQueue) Queue.Enqueue(item);
 			}
 
-			if (!running) ProcessNextQueue(default, default);
+			if (!Running) ProcessNextQueue(default, default);
 		}
 
 		static EncodeSettings CreateConcatQueue(Queue<EncodeSettings> newQueue)
@@ -57,12 +57,12 @@ namespace BatchEncoder
 		{
 			if (Queue.Count == 0)
 			{
-				running = false;
+				Running = false;
 				return;
 			}
 
 			var encoder = Run(Queue.Dequeue());
-			running = true;
+			Running = true;
 			encoder.EnableRaisingEvents = true;
 			encoder.Exited += ProcessNextQueue;
 		}
