@@ -8,7 +8,7 @@ namespace BatchEncoder
 {
 	public class EncodeSettings
 	{
-		public string path;
+		public string input;
 		public string videoCodec;
 		public string videoBitrate;
 		public string framerate;
@@ -42,13 +42,13 @@ namespace BatchEncoder
 		static EncodeSettings CreateConcatQueue(Queue<EncodeSettings> newQueue)
 		{
 			var concat = new StringBuilder();
-			foreach (var q in newQueue) concat.AppendLine("file '" + q.path + "'");
+			foreach (var q in newQueue) concat.AppendLine("file '" + q.input + "'");
 
 			var fileList = Path.Combine(Directory.GetCurrentDirectory(), "concat.txt");
 			File.WriteAllText(fileList, concat.ToString());
 
 			var queue = newQueue.Dequeue();
-			queue.path = fileList;
+			queue.input = fileList;
 			return queue;
 		}
 
@@ -73,7 +73,7 @@ namespace BatchEncoder
 			var arguments = new ArgumentsComposer();
 
 			arguments.Add($"-f concat -safe 0", settings.concatenate);
-			arguments.Add($"-i \"{settings.path}\"");
+			arguments.Add($"-i \"{settings.input}\"");
 			arguments.Add($"-vcodec {settings.videoCodec}");
 			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
 			arguments.Add($"-r {settings.framerate}", settings.framerate);
@@ -81,8 +81,8 @@ namespace BatchEncoder
 			arguments.Add($"-acodec {settings.audioCodec}");
 			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-t {settings.duration}", settings.duration);
-			var extension = ExtensionChecker.IsSameExtension(settings.path) ? "Encoded.mp4" : "mp4";
-			arguments.Add($"\"{Path.ChangeExtension(settings.path, extension)}\"");
+			var extension = ExtensionChecker.IsSameExtension(settings.input) ? "Encoded.mp4" : "mp4";
+			arguments.Add($"\"{Path.ChangeExtension(settings.input, extension)}\"");
 
 			encoder.StartInfo.Arguments = arguments.ToString();
 			encoder.Start();

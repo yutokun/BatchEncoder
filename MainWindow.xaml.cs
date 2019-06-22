@@ -37,7 +37,7 @@ namespace BatchEncoder
 
 				var settings = new EncodeSettings
 				{
-					path = file,
+					input = file,
 					videoCodec = VideoCodec.Text,
 					videoBitrate = VideoBitrate.Text,
 					framerate = Framerate.Text,
