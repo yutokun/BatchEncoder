@@ -45,7 +45,8 @@ namespace BatchEncoder
 					audioCodec = AudioCodec.Text,
 					startSec = StartSec.Text,
 					duration = Duration.Text,
-					concatenate = Concatenate.IsChecked == true
+					concatenate = Concatenate.IsChecked == true,
+					output = file
 				};
 				queue.Enqueue(settings);
 			}

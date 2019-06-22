@@ -17,6 +17,7 @@ namespace BatchEncoder
 		public string startSec;
 		public string duration;
 		public bool concatenate;
+		public string output;
 	}
 
 	public static class MovieEncoder
@@ -81,8 +82,8 @@ namespace BatchEncoder
 			arguments.Add($"-acodec {settings.audioCodec}");
 			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-t {settings.duration}", settings.duration);
-			var extension = ExtensionChecker.IsSameExtension(settings.input) ? "Encoded.mp4" : "mp4";
-			arguments.Add($"\"{Path.ChangeExtension(settings.input, extension)}\"");
+			var extension = ExtensionChecker.IsSameExtension(settings.output) ? "Encoded.mp4" : "mp4";
+			arguments.Add($"\"{Path.ChangeExtension(settings.output, extension)}\"");
 
 			encoder.StartInfo.Arguments = arguments.ToString();
 			encoder.Start();
