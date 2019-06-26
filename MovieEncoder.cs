@@ -84,17 +84,16 @@ namespace BatchEncoder
 			{
 				if (Queue.Count == 0) break;
 
-				var encoder = Run(Queue.Dequeue());
+				var arguments = CreateArguments(Queue.Dequeue());
+				var encoder = Run(arguments);
 				++EncoderCount;
 				encoder.EnableRaisingEvents = true;
 				encoder.Exited += EncoderOnExited;
 			}
 		}
 
-		static Process Run(EncodeSettings settings)
+		static string CreateArguments(EncodeSettings settings)
 		{
-			var encoder = new Process {StartInfo = {FileName = "ffmpeg"}};
-
 			var arguments = new ArgumentsComposer();
 
 			arguments.Add($"-f concat -safe 0", settings.concatenate);
@@ -109,7 +108,13 @@ namespace BatchEncoder
 			var extension = ExtensionChecker.GetAttributedExtension(settings);
 			arguments.Add($"\"{Path.ChangeExtension(settings.output, extension)}\"");
 
-			encoder.StartInfo.Arguments = arguments.ToString();
+			return arguments.ToString();
+		}
+
+		static Process Run(string arguments)
+		{
+			var encoder = new Process {StartInfo = {FileName = "ffmpeg"}};
+			encoder.StartInfo.Arguments = arguments;
 			encoder.Start();
 			return encoder;
 		}
