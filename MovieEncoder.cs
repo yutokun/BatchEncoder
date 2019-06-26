@@ -98,13 +98,13 @@ namespace BatchEncoder
 			var arguments = new ArgumentsComposer();
 
 			arguments.Add($"-f concat -safe 0", settings.concatenate);
+			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-i \"{settings.input}\"");
 			arguments.Add($"-vcodec {settings.videoCodec}");
 			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
 			arguments.Add($"-r {settings.framerate}", settings.framerate);
 			arguments.Add($"-s {settings.videoSize}", settings.videoSize);
 			arguments.Add($"-acodec {settings.audioCodec}");
-			arguments.Add($"-ss {settings.startSec}", settings.startSec);
 			arguments.Add($"-t {settings.duration}", settings.duration);
 			var extension = ExtensionChecker.GetAttributedExtension(settings);
 			arguments.Add($"\"{Path.ChangeExtension(settings.output, extension)}\"");
