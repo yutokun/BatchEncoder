@@ -33,7 +33,7 @@
                 <StackPanel>
                     <DockPanel ToolTip="コーデックを選択します。hevc_nvenc を使用するには、対応する GPU が必要です。">
                         <Label>Codec</Label>
-                        <ComboBox Name="VideoCodec" SelectedIndex="1">
+                        <ComboBox Name="VideoCodec" SelectedIndex="1" DropDownClosed="MainWindow_OnOptionChanged">
                             <ComboBoxItem>copy</ComboBoxItem>
                             <ComboBoxItem>hevc_nvenc</ComboBoxItem>
                             <ComboBoxItem>hevc</ComboBoxItem>
@@ -69,7 +69,7 @@
                 <StackPanel>
                     <DockPanel ToolTip="コーデックを選択します。">
                         <Label>Codec</Label>
-                        <ComboBox Name="AudioCodec" SelectedIndex="0">
+                        <ComboBox Name="AudioCodec" SelectedIndex="0" DropDownClosed="MainWindow_OnOptionChanged">
                             <ComboBoxItem>copy</ComboBoxItem>
                             <ComboBoxItem>aac</ComboBoxItem>
                             <ComboBoxItem>alac</ComboBoxItem>
