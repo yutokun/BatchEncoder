@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BatchEncoder"
         mc:Ignorable="d"
         Name="Window"
-        Title="Batch Encoder" Height="320" Width="640"
+        Title="Batch Encoder" Height="360" Width="640"
         AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -42,18 +42,20 @@
                     </DockPanel>
                     <DockPanel ToolTip="40M 350k といった形でビットレートを指定します。空欄の場合、たぶん 2000k になります。">
                         <Label>Bitrate</Label>
-                        <TextBox Name="VideoBitrate" />
+                        <TextBox Name="VideoBitrate" TextChanged="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel ToolTip="フレームレートを指定します。空欄の場合、元ファイルのレートが使用されます。">
                         <Label>Framerate</Label>
-                        <TextBox Name="Framerate" />
+                        <TextBox Name="Framerate" TextChanged="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel ToolTip="縦横のピクセル数を指定します。空欄の場合、元のサイズが使用されます。">
                         <Label>Size</Label>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="45" />
+                            <TextBox Name="VideoWidth" PreviewTextInput="CheckTextContainsNumber" Width="45"
+                                     TextChanged="MainWindow_OnOptionChanged" />
                             <Label Width="Auto">×</Label>
-                            <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45" />
+                            <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45"
+                                     TextChanged="MainWindow_OnOptionChanged" />
                         </StackPanel>
                     </DockPanel>
                     <DockPanel
@@ -83,11 +85,13 @@
                 <StackPanel>
                     <DockPanel ToolTip="開始時間を秒で指定します。先頭の不要部分をカットできます。空欄ならカットしません。">
                         <Label>Start Sec.</Label>
-                        <TextBox Name="StartSec" PreviewTextInput="CheckTextContainsNumber" />
+                        <TextBox Name="StartSec" PreviewTextInput="CheckTextContainsNumber"
+                                 TextChanged="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel ToolTip="動画の長さを指定します。最後の不要部分をカットできます。空欄ならカットしません。">
                         <Label>Duration</Label>
-                        <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber" />
+                        <TextBox Name="Duration" PreviewTextInput="CheckTextContainsNumber"
+                                 TextChanged="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel ToolTip="複数のファイルを連結します。コーデックをすべて copy にしておくと、劣化なしに連結できます。（動画のフォーマットが一致している必要があります。）">
                         <Label>Concatenate</Label>
@@ -96,6 +100,10 @@
                 </StackPanel>
             </GroupBox>
         </StackPanel>
+        <TextBox Name="CommandPreview" HorizontalAlignment="Stretch" Width="Auto" IsReadOnly="True" BorderThickness="0"
+                 Margin="20 10 20 10">
+            Preview of command.
+        </TextBox>
         <Label Width="Auto" HorizontalAlignment="Center" Margin="20">Drop Files Here</Label>
     </StackPanel>
 </Window>

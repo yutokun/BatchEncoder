@@ -92,7 +92,7 @@ namespace BatchEncoder
 			}
 		}
 
-		static string CreateArguments(EncodeSettings settings)
+		public static string CreateArguments(EncodeSettings settings)
 		{
 			var arguments = new ArgumentsComposer();
 

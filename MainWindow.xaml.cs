@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -18,6 +19,27 @@ namespace BatchEncoder
 			var ver = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 			Window.Title += $" - {ver.ProductVersion}";
 			Application.Current.Exit += OnExit;
+		}
+
+		void MainWindow_OnOptionChanged(object sender, EventArgs eventArgs)
+		{
+			var settings = new EncodeSettings
+			{
+				input = "input.mp4",
+				videoCodec = VideoCodec.Text,
+				videoBitrate = VideoBitrate.Text,
+				framerate = Framerate.Text,
+				videoSize = (string.IsNullOrEmpty(VideoWidth.Text) || string.IsNullOrEmpty(VideoHeight.Text)) ? "" : $"{VideoWidth.Text}x{VideoHeight.Text}",
+				simultaneously = Simultaneously.IsChecked == true,
+				audioCodec = AudioCodec.Text,
+				startSec = StartSec.Text,
+				duration = Duration.Text,
+				concatenate = Concatenate.IsChecked == true,
+				output = "output.mp4"
+			};
+
+			var arguments = MovieEncoder.CreateArguments(settings);
+			CommandPreview.Text = "ffmpeg " + arguments;
 		}
 
 		void MainWindow_OnDragEnter(object sender, DragEventArgs e)
