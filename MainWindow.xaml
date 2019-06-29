@@ -95,7 +95,8 @@
                     </DockPanel>
                     <DockPanel ToolTip="複数のファイルを連結します。コーデックをすべて copy にしておくと、劣化なしに連結できます。（動画のフォーマットが一致している必要があります。）">
                         <Label>Concatenate</Label>
-                        <CheckBox Name="Concatenate" />
+                        <CheckBox Name="Concatenate" Checked="MainWindow_OnOptionChanged"
+                                  Unchecked="MainWindow_OnOptionChanged" />
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
