@@ -18,6 +18,7 @@ namespace BatchEncoder
 			InitializeComponent();
 			var ver = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 			Window.Title += $" - {ver.ProductVersion}";
+			MainWindow_OnOptionChanged(null, null);
 			Application.Current.Exit += OnExit;
 		}
 
