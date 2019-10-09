@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BatchEncoder"
         mc:Ignorable="d"
         Name="Window"
-        Title="Batch Encoder" Height="340" Width="640"
+        Title="Batch Encoder" Height="380" Width="640"
         AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -57,6 +57,11 @@
                             <TextBox Name="VideoHeight" PreviewTextInput="CheckTextContainsNumber" Width="45"
                                      TextChanged="MainWindow_OnOptionChanged" />
                         </StackPanel>
+                    </DockPanel>
+                    <DockPanel ToolTip="ピクセルフォーマットを YUV420P で出力します。ほとんどのソフトウェアとの互換性を確保できます。">
+                        <Label>YUV420P</Label>
+                        <CheckBox Name="YUV420P" Checked="MainWindow_OnOptionChanged"
+                                  Unchecked="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel
                         ToolTip="同時に2つまでのエンコーディングを実行します。hevc_nvenc で複数ファイルを処理する際に大きな効果があります。CPU を使うコーデックでは少し遅くなります。">

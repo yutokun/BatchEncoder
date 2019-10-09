@@ -13,6 +13,7 @@ namespace BatchEncoder
 		public string videoBitrate;
 		public string framerate;
 		public string videoSize;
+		public bool yuv420p;
 		public bool simultaneously;
 		public string audioCodec;
 		public string startSec;
@@ -103,6 +104,7 @@ namespace BatchEncoder
 			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
 			arguments.Add($"-r {settings.framerate}", settings.framerate);
 			arguments.Add($"-s {settings.videoSize}", settings.videoSize);
+			arguments.Add($"-pix_fmt yuv420p", settings.yuv420p);
 			arguments.Add($"-acodec {settings.audioCodec}");
 			arguments.Add($"-t {settings.duration}", settings.duration);
 			var extension = ExtensionChecker.GetAttributedExtension(settings);
