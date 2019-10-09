@@ -84,6 +84,10 @@
                             <ComboBoxItem>vorbis</ComboBoxItem>
                         </ComboBox>
                     </DockPanel>
+                    <DockPanel ToolTip="256k といった形でビットレートを指定します。空欄の場合、チャンネル数などに応じて自動的に決定されます。">
+                        <Label>Bitrate</Label>
+                        <TextBox Name="AudioBitrate" TextChanged="MainWindow_OnOptionChanged" />
+                    </DockPanel>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Trim">
