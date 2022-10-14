@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BatchEncoder"
         mc:Ignorable="d"
         Name="Window"
-        Title="Batch Encoder" Height="380" Width="640"
+        Title="Batch Encoder" Height="415" Width="640"
         AllowDrop="True" DragEnter="MainWindow_OnDragEnter" Drop="MainWindow_OnDrop"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -43,6 +43,10 @@
                     <DockPanel ToolTip="40M 350k といった形でビットレートを指定します。空欄の場合、たぶん 2000k になります。">
                         <Label>Bitrate</Label>
                         <TextBox Name="VideoBitrate" TextChanged="MainWindow_OnOptionChanged" />
+                    </DockPanel>
+                    <DockPanel ToolTip="40M 350k といった形で最大ビットレートを指定します。">
+                        <Label>Maxrate</Label>
+                        <TextBox Name="VideoMaxBitrate" TextChanged="MainWindow_OnOptionChanged" />
                     </DockPanel>
                     <DockPanel ToolTip="フレームレートを指定します。空欄の場合、元ファイルのレートが使用されます。">
                         <Label>Framerate</Label>

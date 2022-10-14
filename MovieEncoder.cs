@@ -11,6 +11,7 @@ namespace BatchEncoder
 		public string input;
 		public string videoCodec;
 		public string videoBitrate;
+		public string videoMaxrate;
 		public string framerate;
 		public string videoSize;
 		public bool yuv420p;
@@ -103,6 +104,7 @@ namespace BatchEncoder
 			arguments.Add($"-i \"{settings.input}\"");
 			arguments.Add($"-vcodec {settings.videoCodec}");
 			arguments.Add($"-b:v {settings.videoBitrate}", settings.videoBitrate);
+			arguments.Add($"-maxrate {settings.videoMaxrate}", settings.videoMaxrate);
 			arguments.Add($"-r {settings.framerate}", settings.framerate);
 			arguments.Add($"-s {settings.videoSize}", settings.videoSize);
 			arguments.Add($"-pix_fmt yuv420p", settings.yuv420p);
